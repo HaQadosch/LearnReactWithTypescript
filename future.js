@@ -16,3 +16,16 @@ var customer = {
 customer.turnover = 5000;
 var numbers = [1, 3, 5];
 numbers.forEach(function (nbr) { return console.log(nbr); });
+var table = {
+    name: "Table",
+    unitPrice: 500
+};
+var tableOrder = {
+    product: table,
+    quantity: 1,
+    getTotal: function (discount) {
+        var priceWithoutDiscount = this.product.unitPrice * this.quantity;
+        var discountAmount = priceWithoutDiscount * discount;
+        return priceWithoutDiscount - discountAmount;
+    }
+};

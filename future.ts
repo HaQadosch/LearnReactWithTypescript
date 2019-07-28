@@ -21,4 +21,3 @@ customer.turnover = 5000
 const numbers = [1, 3, 5]
 
 numbers.forEach(nbr => console.log(nbr))
-
