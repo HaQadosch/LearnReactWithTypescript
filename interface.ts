@@ -1,7 +1,3 @@
-interface Product {
-  readonly name: string
-  unitPrice: number
-}
 
 interface DiscountCode {
   code: string
