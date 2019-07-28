@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "outDir": "dist",
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+  },
+  "exclude": [
+    "dist"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

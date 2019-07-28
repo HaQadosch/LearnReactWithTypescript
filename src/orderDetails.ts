@@ -1,6 +1,9 @@
-import { Product } from './product'
+export interface Product {
+  readonly name: string
+  unitPrice: number
+}
 
-class OrderDetail {
+export class OrderDetail {
   product: Product;
   quantity: number;
   getTotal(discount: number): number {

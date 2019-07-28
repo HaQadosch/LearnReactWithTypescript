@@ -1,0 +1,1 @@
+{"version":3,"file":"orderDetails.js","sourceRoot":"","sources":["../src/orderDetails.ts"],"names":[],"mappings":"AAKA,MAAM,OAAO,WAAW;IAGtB,QAAQ,CAAC,QAAgB;QACvB,MAAM,oBAAoB,GAAG,IAAI,CAAC,OAAO,CAAC,SAAS,GAAG,IAAI,CAAC,QAAQ,CAAC;QACpE,MAAM,cAAc,GAAG,oBAAoB,GAAG,QAAQ,CAAC;QACvD,OAAO,oBAAoB,GAAG,cAAc,CAAC;IAC/C,CAAC;CACF"}
