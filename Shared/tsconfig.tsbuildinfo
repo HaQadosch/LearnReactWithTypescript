@@ -1,0 +1,54 @@
+{
+  "program": {
+    "fileInfos": {
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.d.ts": {
+        "version": "49ff9798f592c8b7e628fd881401e68810c1b3589ecd7a41b32b3c287374cde0",
+        "signature": "49ff9798f592c8b7e628fd881401e68810c1b3589ecd7a41b32b3c287374cde0"
+      },
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "1f753cee573dea40df8a9dc873fef5566957b19ad513874f6643d8dfb14842d0",
+        "signature": "1f753cee573dea40df8a9dc873fef5566957b19ad513874f6643d8dfb14842d0"
+      },
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "973df4e41aea3780ce77073777d37dd5896f684124f4c42409f3a832133837a4",
+        "signature": "973df4e41aea3780ce77073777d37dd5896f684124f4c42409f3a832133837a4"
+      },
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+        "version": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b",
+        "signature": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b"
+      },
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.scripthost.d.ts": {
+        "version": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9",
+        "signature": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9"
+      },
+      "c:/users/haqadosch/documents/javascript/pack_learnreactwithtypescript/learnreactwithtypescript/shared/src/utils.ts": {
+        "version": "3de2d1fcb054f5e7f133e6ffcc830c1b4e2016a2f0589e635d6646d71ffb469f",
+        "signature": "b4c5847a57c4aa7d6ad635c479ae014c033d7c9b5b85f4977f2679d89f66b681"
+      }
+    },
+    "options": {
+      "composite": true,
+      "declaration": true,
+      "declarationMap": true,
+      "target": 1,
+      "outDir": "C:/Users/HaQadosch/Documents/Javascript/Pack_LearnReactWithTypescript/LearnReactWithTypescript/Shared/dist",
+      "module": 5,
+      "sourceMap": true,
+      "noImplicitReturns": true,
+      "noImplicitAny": true,
+      "rootDir": "C:/Users/HaQadosch/Documents/Javascript/Pack_LearnReactWithTypescript/LearnReactWithTypescript/Shared/src",
+      "configFilePath": "C:/Users/HaQadosch/Documents/Javascript/Pack_LearnReactWithTypescript/LearnReactWithTypescript/Shared/tsconfig.json"
+    },
+    "referencedMap": {},
+    "exportedModulesMap": {},
+    "semanticDiagnosticsPerFile": [
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.d.ts",
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.es5.d.ts",
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.dom.d.ts",
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "c:/users/haqadosch/appdata/roaming/npm/node_modules/typescript/lib/lib.scripthost.d.ts",
+      "c:/users/haqadosch/documents/javascript/pack_learnreactwithtypescript/learnreactwithtypescript/shared/src/utils.ts"
+    ]
+  },
+  "version": "3.5.3"
+}
