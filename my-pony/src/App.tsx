@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Confirm } from './Confirm';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -19,6 +18,12 @@ const App: React.FC = () => {
           Learn React and Typescript
         </a>
       </header>
+      <Confirm
+        title={'React and TypeScript'}
+        content={'Are you sure you want to learn React and TypeScript?'}
+        cancelCaption={'not sure'}
+        okCaption={'yes sure'}
+      />
     </div>
   );
 }
