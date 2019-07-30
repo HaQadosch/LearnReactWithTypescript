@@ -1,0 +1,23 @@
+{
+  "name": "LearnReactWithTypescript",
+  "version": "1.0.0",
+  "description": "https://subscription.packtpub.com/book/web-development/9781789610253",
+  "main": "future.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaQadosch/LearnReactWithTypescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HaQadosch/LearnReactWithTypescript/issues"
+  },
+  "homepage": "https://github.com/HaQadosch/LearnReactWithTypescript#readme",
+  "dependencies": {
+    "create-react-app": "^3.0.1"
+  }
+}
