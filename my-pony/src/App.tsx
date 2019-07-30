@@ -3,6 +3,14 @@ import './App.css';
 import { Confirm } from './Confirm';
 
 const App: React.FC = () => {
+  const onOKClick = () => {
+    console.log('handleOKClick')
+  }
+
+  const onCancelClick = () => {
+    console.log('handleCancelClick')
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -23,6 +31,8 @@ const App: React.FC = () => {
         content={'Are you sure you want to learn React and TypeScript?'}
         cancelCaption={'not sure'}
         okCaption={'yes sure'}
+        onCancelClick={onCancelClick}
+        onOKClick={onOKClick}
       />
     </div>
   );

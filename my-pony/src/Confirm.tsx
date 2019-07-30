@@ -4,11 +4,21 @@ import './Confirm.css'
 interface IConfirmProps {
   title: string
   content: string
+  onOKClick: () => void
+  onCancelClick: () => void
   cancelCaption?: string
   okCaption?: string
 }
 
-export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption = 'cancel', okCaption = 'ok' }) => {
+export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption = 'cancel', okCaption = 'ok', onCancelClick, onOKClick }) => {
+  const handleOKClick = () => {
+    onOKClick()
+  }
+
+  const handleCancelClick = () => {
+    onCancelClick()
+  }
+
   return (
     <div className='confirm-wrapper confirm-visible'>
       <div className="confirm-container">
@@ -19,8 +29,8 @@ export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption
           <p>{content}</p>
         </div>
         <div className="confirm-buttons-container">
-          <button className="confirm-cancel">{cancelCaption}</button>
-          <button className="confirm-ok">{okCaption}</button>
+          <button className="confirm-cancel" onClick={handleCancelClick} >{cancelCaption}</button>
+          <button className="confirm-ok" onClick={handleOKClick} >{okCaption}</button>
         </div>
       </div>
     </div>
