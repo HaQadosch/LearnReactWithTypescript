@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Confirm } from './Confirm';
 
 const App: React.FC = () => {
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(true)
+
   const onOKClick = () => {
     console.log('handleOKClick')
+    setConfirmOpen(false)
   }
-
+  
   const onCancelClick = () => {
     console.log('handleCancelClick')
+    setConfirmOpen(true)
   }
 
   return (
@@ -27,6 +31,7 @@ const App: React.FC = () => {
         </a>
       </header>
       <Confirm
+        open={confirmOpen}
         title={'React and TypeScript'}
         content={'Are you sure you want to learn React and TypeScript?'}
         cancelCaption={'not sure'}

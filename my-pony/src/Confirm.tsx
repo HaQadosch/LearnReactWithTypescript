@@ -2,6 +2,7 @@ import React from 'react'
 import './Confirm.css'
 
 interface IConfirmProps {
+  open: boolean
   title: string
   content: string
   onOKClick: () => void
@@ -10,7 +11,7 @@ interface IConfirmProps {
   okCaption?: string
 }
 
-export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption = 'cancel', okCaption = 'ok', onCancelClick, onOKClick }) => {
+export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption = 'cancel', okCaption = 'ok', onCancelClick, onOKClick, open }) => {
   const handleOKClick = () => {
     onOKClick()
   }
@@ -20,7 +21,7 @@ export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption
   }
 
   return (
-    <div className='confirm-wrapper confirm-visible'>
+    <div className={open ? 'confirm-wrapper confirm-visible' : 'confirm-wrapper'}>
       <div className="confirm-container">
         <div className="confirm-title-container">
           <span>{title}</span>
