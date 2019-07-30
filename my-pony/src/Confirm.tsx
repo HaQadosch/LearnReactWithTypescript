@@ -12,7 +12,6 @@ interface IConfirmProps {
 }
 
 export const Confirm: React.FC<IConfirmProps> = ({ title, content, cancelCaption = 'cancel', okCaption = 'ok', onCancelClick, onOKClick, open }) => {
-  console.log('<Confirm />')
   const handleOKClick = () => {
     onOKClick()
   }

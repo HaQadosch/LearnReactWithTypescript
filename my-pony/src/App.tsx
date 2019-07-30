@@ -4,7 +4,6 @@ import { Confirm } from './Confirm';
 import { Timer } from './Timer';
 
 const App: React.FC = () => {
-  console.log('<App />')
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
   const [delTimer, setDelTimer] = useState(false)
 

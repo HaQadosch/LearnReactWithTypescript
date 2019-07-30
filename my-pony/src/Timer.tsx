@@ -6,7 +6,6 @@ interface ITimerProps {
 }
 
 export const Timer: React.FC<ITimerProps> = ({ countStart, action }) => {
-  console.log('<Timer />')
   const [count, setCount] = useState<number>(countStart)
 
   useEffect(() => {
