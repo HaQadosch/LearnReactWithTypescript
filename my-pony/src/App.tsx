@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import './App.css';
 import { Confirm } from './Confirm';
+import { Timer } from './Timer';
 
 const App: React.FC = () => {
-  const [confirmOpen, setConfirmOpen] = useState<boolean>(true)
+  console.log('<App />')
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+  const [delTimer, setDelTimer] = useState(false)
+
+  const onTimerDone = () => {
+    setConfirmOpen(true)
+    setDelTimer(true)
+  }
 
   const onOKClick = () => {
     console.log('handleOKClick')
@@ -30,6 +38,7 @@ const App: React.FC = () => {
           Learn React and Typescript
         </a>
       </header>
+      {delTimer || <Timer countStart={10} action={onTimerDone} />}
       <Confirm
         open={confirmOpen}
         title={'React and TypeScript'}
