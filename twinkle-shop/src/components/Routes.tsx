@@ -8,7 +8,7 @@ import { NotFoundPage } from './NotFoundPage'
 import { LoginPage } from './LoginPage'
 
 export const Routes: React.FC = () => {
-  const [loggedIn/*, setLoggedIn*/] = useState<boolean>(false)
+  const [loggedIn/*, setLoggedIn*/] = useState<boolean>(true)
 
   return (
     <Router>
