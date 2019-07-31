@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Prompt } from 'react-router-dom'
 import { IProduct, products } from '../ProductData';
 
 type Props = RouteComponentProps<{ id: string }>
 
 export const ProductDetailPage: React.FC<Props> = ({ match: { params: { id } } }) => {
-  console.log('<ProductDetailPage>', { id })
-
   const [inBasket, setInBasket] = useState<boolean>(false)
 
   const productFound: IProduct | undefined = products.filter(({ id: productId }) => productId === parseInt(id, 10)).pop()
@@ -16,8 +14,11 @@ export const ProductDetailPage: React.FC<Props> = ({ match: { params: { id } } }
     setInBasket(true)
   }
 
+  const navAwayMessage = () => 'Are you sure you want to leave without adding anything to the basket?'
+
   return (
     <span className="page-container">
+      <Prompt when={!inBasket} message={navAwayMessage} />
       {productFound ? (
         <>
           <h2>{name}</h2>
