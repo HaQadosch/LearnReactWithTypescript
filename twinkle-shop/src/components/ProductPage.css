@@ -13,3 +13,7 @@
  .product-list-item {
   padding: 5px;
  }
+
+ .product-list-item a {
+  text-decoration: none;
+}
