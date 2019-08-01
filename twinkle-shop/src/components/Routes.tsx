@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import './Routes.css'
 import { BrowserRouter as Router, Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
 import { Header } from './Header'
-import { AdminPage } from './AdminPage'
+
 import { ProductPage } from './ProductPage'
 import { ProductDetailPage } from './ProductDetailPage'
 import { NotFoundPage } from './NotFoundPage'
 import { LoginPage } from './LoginPage'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
+const AdminPage = React.lazy(() => import('./AdminPage'))
 
 const Routes_: React.FC<RouteComponentProps> = ({ location: { key } }) => {
   const [loggedIn/*, setLoggedIn*/] = useState<boolean>(true)
@@ -24,7 +26,11 @@ const Routes_: React.FC<RouteComponentProps> = ({ location: { key } }) => {
             <Redirect exact={true} from='/' to='/products' />
             <Route path='/products' component={ProductPage} />
             <Route path='/product/:id' component={ProductDetailPage} />
-            <Route path='/admin'>{loggedIn ? <AdminPage /> : <Redirect to='/login' />}</Route>
+            <Route path='/admin'>{
+              loggedIn
+                ? <Suspense fallback={<p className='page-container'>Loading...</p>}><AdminPage /></Suspense>
+                : <Redirect to='/login' />
+            }</Route>
             <Route path='/login' component={LoginPage} />
             <Route component={NotFoundPage} />
           </Switch>

@@ -20,6 +20,9 @@ export const AdminPage: React.FC = () => {
   )
 }
 
+// To make it work with Lazy loading.
+export default AdminPage
+
 interface IUsers {
   id: number
   name: string
@@ -47,11 +50,11 @@ const AdminUsers: React.FC = () => {
   )
 }
 
-const AdminUserDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match: { params: { id }}}) => {
-  const idNum = parseInt(id, 10)  
+const AdminUserDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match: { params: { id } } }) => {
+  const idNum = parseInt(id, 10)
   if (Number.isNaN(idNum)) return null
 
-  const { id: userId, isAdmin } = adminUsersData.find(({id: userId}) => userId === idNum) || { id: 0, isAdmin: false}
+  const { id: userId, isAdmin } = adminUsersData.find(({ id: userId }) => userId === idNum) || { id: 0, isAdmin: false }
 
   return (
     <ul>
@@ -69,8 +72,8 @@ const AdminUserDetail: React.FC<RouteComponentProps<{ id: string }>> = ({ match:
 
 const AdminProducts: React.FC = () => {
   return (
-    <div>
+    <section>
       Some options to admister products
-    </div>
+    </section>
   )
 }
