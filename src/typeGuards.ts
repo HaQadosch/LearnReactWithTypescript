@@ -18,7 +18,7 @@ interface ICompany {
   name: string
 }
 
-type PersonLaw = IPerson | ICompany
+export type PersonLaw = IPerson | ICompany
 
 function logName(arg: PersonLaw): string {
   if ('firstName' in arg) {
