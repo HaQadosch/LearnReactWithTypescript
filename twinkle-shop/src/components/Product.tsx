@@ -3,6 +3,9 @@ import { IProduct } from '../ProductData';
 import './Product.css'
 import { Tabs, Tab } from './Tabs';
 
+const TabHeadingDescripton = (): JSX.Element => <b>Description <span role='img' aria-label='description'>🧾</span></b>
+const TabHeadingReviews = (): JSX.Element => <b>Reviews <span role='img' aria-label='reviews'>🤦‍♀️</span></b>
+
 interface IProductProps {
   product: IProduct
   inBasket: boolean
@@ -15,20 +18,20 @@ export const Product: React.FC<IProductProps> = ({ product: { id, name, descript
   return (
     <>
       <h2>{name}</h2>
-      <Tabs headings={['description', 'reviews']} >
-        <Tab name='description' initialActive={true} >
-          <b>Description</b>
+      <Tabs >
+        <Tab name='description' initialActive={true} heading={TabHeadingDescripton} >
+          <p>{description}</p>
         </Tab>
-        <Tab name='reviews'>Reviews</Tab>
+        <Tab name='reviews' heading={TabHeadingReviews} >
+          <ul className="product-reviews">
+            {reviews.map(({ comment, reviewer }, index) => (
+              <li className="product-reviews-item" key={index}>
+                <i>{comment}</i> - {reviewer}
+              </li>
+            ))}
+          </ul>
+        </Tab>
       </Tabs>
-      <p>{description}</p>
-      <ul className="product-reviews">
-        {reviews.map(({ comment, reviewer }, index) => (
-          <li className="product-reviews-item" key={index}>
-            <i>{comment}</i> - {reviewer}
-          </li>
-        ))}
-      </ul>
       <p className="product-price">
         {new Intl.NumberFormat('en-GB', {
           currency: 'GBP',

@@ -3,7 +3,7 @@ import './Tabs.css'
 
 interface ITabsContext {
   activeName?: string
-  handleTabClick?: (name: string) => void
+  handleTabClick?: (name: string, content: React.ReactNode) => void
 }
 
 const TabsContext = createContext<ITabsContext>({})
@@ -11,20 +11,27 @@ const TabsContext = createContext<ITabsContext>({})
 interface ITab {
   name: string
   initialActive?: boolean
+  heading: () => string | JSX.Element
 }
 
-export const Tab: React.FC<ITab> = ({ name = '', initialActive = false, children }) => (
+export const Tab: React.FC<ITab> = ({ name = '', initialActive = false, heading, children }) => (
   <TabsContext.Consumer>
-    {({ activeName: contextActiveName, handleTabClick: contextHandleTabClick }: ITabsContext) => {
-      const activeName = contextActiveName || (initialActive ? name : '')
+    {({ activeName: tabsActiveName, handleTabClick: tabsHandleTabClick }: ITabsContext) => {
+      const activeName = tabsActiveName || (initialActive ? name : '')
+      if (!tabsActiveName && initialActive) {
+        if (tabsHandleTabClick) {
+          tabsHandleTabClick(activeName, children)
+          return null // Avoids a render, as tabsHandleTabClik triggered a render already.
+        }
+      }
       const handleTabClick = (evt: React.MouseEvent<HTMLLIElement>) => {
-        if (contextHandleTabClick) {
-          contextHandleTabClick(name)
+        if (tabsHandleTabClick) {
+          tabsHandleTabClick(name, children)
         }
       }
       return (
         <li className={name === activeName ? 'active' : ''} onClick={handleTabClick}>
-          {children}
+          {heading()}
         </li>
       )
     }}
@@ -33,13 +40,17 @@ export const Tab: React.FC<ITab> = ({ name = '', initialActive = false, children
 
 interface ITabs {
   activeName?: string
-  headings: string[]
+  activeContent?: React.ReactNode
 }
 
-export const Tabs: React.FC<ITabs> = ({ activeName: name = '', headings, children }) => {
+export const Tabs: React.FC<ITabs> = ({ activeName: name = '', activeContent: content = <p>empty</p>, children }) => {
   const [activeName, setActiveName] = useState<string>(name)
+  const [activeContent, setActiveContent] = useState<React.ReactNode>(content)
 
-  const handleTabClick = setActiveName
+  const handleTabClick = (name: string, content: React.ReactNode) => {
+    setActiveName(name)
+    setActiveContent(content)
+  }
 
   return (
     <TabsContext.Provider
@@ -51,6 +62,7 @@ export const Tabs: React.FC<ITabs> = ({ activeName: name = '', headings, childre
       <ul className='tabs'>
         {children}
       </ul>
+      <section>{activeContent}</section>
     </TabsContext.Provider>
   )
 }
