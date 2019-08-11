@@ -1,14 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, Prompt } from 'react-router-dom'
-import { IProduct, products } from '../ProductData';
-import { Product } from './Product';
+import { IProduct, getProduct } from '../ProductData';
+import { /*Product, */ProductWithLoader } from './Product';
 
 type Props = RouteComponentProps<{ id: string }>
 
-export const ProductDetailPage: React.FC<Props> = ({ match: { params: { id } } }) => {
+export const ProductDetailPage: React.FC<Props> = ({ match: { params: { id = '0' } } }) => {
   const [inBasket, setInBasket] = useState<boolean>(false)
+  const [product, setProduct] = useState<IProduct | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
-  const productFound: IProduct | undefined = products.filter(({ id: productId }) => productId === parseInt(id, 10)).pop()
+  useEffect(() => {
+    async function fetchData() {
+      const productId = parseInt(id, 10)
+      const lookedUp = await getProduct(productId)
+      setProduct(lookedUp)
+      setLoading(false)
+
+    }
+    fetchData();
+    return () => {
+      setProduct(null)
+    }
+  }, [id])
 
   const handleAddToBasket = () => {
     setInBasket(true)
@@ -19,8 +33,8 @@ export const ProductDetailPage: React.FC<Props> = ({ match: { params: { id } } }
   return (
     <span className="page-container">
       <Prompt when={!inBasket} message={navAwayMessage} />
-      {productFound
-        ? <Product product={productFound} inBasket={inBasket} onAddToBasket={handleAddToBasket} />
+      {product || loading
+        ? <ProductWithLoader product={product as IProduct} inBasket={inBasket} onAddToBasket={handleAddToBasket} isLoading={loading} />
         : <p>Product not found</p>
       }
     </span>

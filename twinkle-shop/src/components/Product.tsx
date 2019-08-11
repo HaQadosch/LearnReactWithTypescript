@@ -2,6 +2,7 @@ import React from 'react'
 import { IProduct } from '../ProductData';
 import './Product.css'
 import { Tabs, Tab } from './Tabs';
+import { withLoader } from './withLoader';
 
 const TabHeadingDescripton = (): JSX.Element => <b>Description <span role='img' aria-label='description'>🧾</span></b>
 const TabHeadingReviews = (): JSX.Element => <b>Reviews <span role='img' aria-label='reviews'>🤦‍♀️</span></b>
@@ -42,3 +43,5 @@ export const Product: React.FC<IProductProps> = ({ product: { id, name, descript
     </>
   )
 }
+
+export const ProductWithLoader = withLoader(Product)
