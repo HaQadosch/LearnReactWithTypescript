@@ -33,6 +33,7 @@ const Header_: React.FC<RouteComponentProps> = ({location: { search: urlSearch }
       <h1 className="header-title">React Twinkle Shop</h1>
       <nav>
         <NavLink to='/products' className='header-link' activeClassName='header-link-active' >Products</NavLink>
+        <NavLink to='/contactus' className='header-link' activeClassName='header-link-active'>Contact Us</NavLink>
         <NavLink to='/admin' className='header-link' activeClassName='header-link-active' >Admin</NavLink>
       </nav>
     </header>

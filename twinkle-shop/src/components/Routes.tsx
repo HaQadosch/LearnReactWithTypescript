@@ -8,6 +8,7 @@ import { ProductDetailPage } from './ProductDetailPage'
 import { NotFoundPage } from './NotFoundPage'
 import { LoginPage } from './LoginPage'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { ContactUS } from './ContactUS'
 
 const AdminPage = React.lazy(() => import('./AdminPage'))
 
@@ -26,6 +27,7 @@ const Routes_: React.FC<RouteComponentProps> = ({ location: { key } }) => {
             <Redirect exact={true} from='/' to='/products' />
             <Route path='/products' component={ProductPage} />
             <Route path='/product/:id' component={ProductDetailPage} />
+            <Route path='/contactus' component={ContactUS} />
             <Route path='/admin'>{
               loggedIn
                 ? <Suspense fallback={<p className='page-container'>Loading...</p>}><AdminPage /></Suspense>
