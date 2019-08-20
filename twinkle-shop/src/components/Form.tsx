@@ -5,13 +5,14 @@ import './Form.css'
 interface IErrors {
   [key: string]: string[]
 }
-interface IValues {
+export interface IValues {
   [key: string]: any
 }
 
 interface IFormProps {
   defaultValues: IValues
   validationRules: IValidationProps
+  onSubmit: (values: IValues) => Promise<ISubmitResult>
 }
 
 interface IFormFieldProps {
@@ -28,9 +29,24 @@ interface IFormContext {
   validate?: (fieldname: string, value: any) => void
 }
 
-const FormContext = createContext<IFormContext>({ values: {}, errors: {} })
+interface IValidation {
+  validator: Validator
+  arg?: any
+}
+
+interface IValidationProps {
+  [key: string]: IValidation | IValidation[]
+}
+
+export interface ISubmitResult {
+  success: boolean
+  errors?: IErrors
+}
 
 export type Validator = (fieldname: string, values: IValues, args?: any) => string
+
+const FormContext = createContext<IFormContext>({ values: {}, errors: {} })
+
 
 export const required: Validator = (fieldName, values, args): string => {
   let validate = ''
@@ -46,15 +62,6 @@ export const minLength: Validator = (fieldname, values, length: number): string 
     validate = `This must be at least ${length} character long.`
   }
   return validate
-}
-
-interface IValidation {
-  validator: Validator
-  arg?: any
-}
-
-interface IValidationProps {
-  [key: string]: IValidation | IValidation[]
 }
 
 export const FormField: React.FC<IFormFieldProps> = ({ name, label, type = 'Text', options }) => {
@@ -92,9 +99,11 @@ export const FormField: React.FC<IFormFieldProps> = ({ name, label, type = 'Text
   )
 }
 
-export const Form: React.FC<IFormProps> = ({ defaultValues, validationRules, children }) => {
+export const Form: React.FC<IFormProps> = ({ defaultValues, validationRules, onSubmit, children }) => {
   const [values, setValues] = useState<IValues>(defaultValues)
   const [errors, setErrors] = useState<IErrors>({})
+  const [submitting, setSubmitting] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState<boolean>(false)
 
   useEffect(() => {
     const errors: IErrors = {}
@@ -109,10 +118,6 @@ export const Form: React.FC<IFormProps> = ({ defaultValues, validationRules, chi
     setValues(produce(values, draft => {
       draft[fieldname] = value
     }))
-  }
-
-  const handleFormSubmit: React.ChangeEventHandler<HTMLFormElement> = evt => {
-    evt.preventDefault()
   }
 
   const validate = (fieldName: string, value: any): string[] => {
@@ -137,12 +142,38 @@ export const Form: React.FC<IFormProps> = ({ defaultValues, validationRules, chi
     return newErrors
   }
 
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async evt => {
+    evt.preventDefault()
+    if (validateForm()) {
+      setSubmitting(true)
+      const result = await onSubmit(values)
+      setErrors(result.errors || {})
+      setSubmitted(result.success)
+      setSubmitting(false)
+    }
+  }
+
   const context: IFormContext = { values, setValue: setNewValues, errors, validate }
+
+  const validateForm = (): boolean => {
+    const errors: IErrors = {}
+    let haveErrors = false
+    Object.keys(defaultValues).map(fieldname => {
+      errors[fieldname] = validate(fieldname, values[fieldname])
+      haveErrors = errors[fieldname].length > 0
+      return fieldname
+    })
+    setErrors(errors)
+    return !haveErrors
+  }
 
   return (
     <FormContext.Provider value={context}>
       <form className='form' noValidate={true} onSubmit={handleFormSubmit} >
         {children}
+        <div className="form-group">
+          <button type="submit" disabled={submitting || submitted}>Submit</button>
+        </div>
       </form>
     </FormContext.Provider>
   )

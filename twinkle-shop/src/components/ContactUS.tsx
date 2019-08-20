@@ -1,8 +1,17 @@
 import React from 'react'
 import './ContactUS.css'
-import { Form, FormField, required, minLength } from './Form';
+import { Form, FormField, required, minLength, ISubmitResult, IValues } from './Form';
 
-export const ContactUS: React.FC = () => {
+interface IContactUsProps {
+  onSubmit: (values: IValues) => Promise<ISubmitResult>
+}
+
+export const ContactUS: React.FC<IContactUsProps> = ({ onSubmit }) => {
+  const handleSubmit = async (values: IValues): Promise<ISubmitResult> => {
+    const result = await onSubmit(values)
+    return result
+  }
+
   return (
     <Form
       defaultValues={{ name: '', email: '', reason: 'Support', notes: '' }}
@@ -10,6 +19,7 @@ export const ContactUS: React.FC = () => {
         email: { validator: required },
         name: [{ validator: required }, { validator: minLength, arg: 2 }]
       }}
+      onSubmit={handleSubmit}
     >
       <FormField name='name' label='Your name' />
       <FormField name='email' label='Your email' type='Email' />
@@ -19,12 +29,24 @@ export const ContactUS: React.FC = () => {
   )
 }
 
+const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
+
 export const ContactUSPage: React.FC = () => {
+  const handleSubmit = async (values: IValues): Promise<ISubmitResult> => {
+    await wait(1000)
+    return {
+      errors: {
+        email: ['Something is wrong with this.']
+      },
+      success: false
+    }
+  }
+
   return (
     <section className='page-container'>
       <h2>Contact US</h2>
       <p>If you enter your details, we'll get back to you as soon as possible.</p>
-      <ContactUS />
+      <ContactUS onSubmit={handleSubmit} />
     </section>
   )
 }
