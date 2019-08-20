@@ -42,7 +42,7 @@ export const required: Validator = (fieldName, values, args): string => {
 
 export const minLength: Validator = (fieldname, values, length: number): string => {
   let validate = ''
-  if (values[fieldname] && values[fieldname].lenght < length) {
+  if (values[fieldname] && values[fieldname].length < length) {
     validate = `This must be at least ${length} character long.`
   }
   return validate
