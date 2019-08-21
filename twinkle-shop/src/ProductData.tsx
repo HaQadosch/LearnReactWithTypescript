@@ -53,11 +53,14 @@ export const products: IProduct[] = [
   }
 ]
 
-const wait = (ms: number): Promise<void> => {
-  return new Promise(resolve => window.setTimeout(resolve, ms))
-}
+export const wait = (ms: number): Promise<void> => new Promise(resolve => window.setTimeout(resolve, ms))
 
 export const getProduct = async (lookupId: number): Promise<IProduct | null> => {
   await wait(2000)
   return products.filter(({ id: productId }) => productId === lookupId).pop() || null
+}
+
+export const getProducts = async (): Promise<IProduct[]> => {
+  await wait(2000)
+  return products
 }

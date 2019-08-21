@@ -1,7 +1,7 @@
 import React from 'react'
 import './ContactUS.css'
 import { Form, FormField, required, minLength, ISubmitResult, IValues } from './Form';
-
+import { wait } from '../ProductData'
 interface IContactUsProps {
   onSubmit: (values: IValues) => Promise<ISubmitResult>
 }
@@ -28,8 +28,6 @@ export const ContactUS: React.FC<IContactUsProps> = ({ onSubmit }) => {
     </Form>
   )
 }
-
-const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
 
 export const ContactUSPage: React.FC = () => {
   const handleSubmit = async (values: IValues): Promise<ISubmitResult> => {
