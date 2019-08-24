@@ -1,4 +1,4 @@
-import { IProduct, products } from '../ProductData'
+import { IProduct } from '../ProductData'
 
 export enum ProductsActionTypes {
   GETALL = 'PRODUCTS/GETALL',
@@ -13,6 +13,10 @@ export interface IProductsGetAllAction {
 export interface IProductsLoadingAction {
   type: ProductsActionTypes.LOADING
 }
+
+export type ProductsActions = 
+  | IProductsGetAllAction
+  | IProductsLoadingAction
 
 export interface IProductsState {
   readonly products: IProduct[]

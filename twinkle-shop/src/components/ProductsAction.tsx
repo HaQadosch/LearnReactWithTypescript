@@ -1,4 +1,4 @@
-import { ActionCreator, AnyAction, Dispatch } from 'redux'
+import { ActionCreator, Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { getProducts as getProductsFromAPI } from '../ProductData'
 import { IProductsGetAllAction, IProductsLoadingAction, IProductsState, ProductsActionTypes } from './ProductsTypes'
