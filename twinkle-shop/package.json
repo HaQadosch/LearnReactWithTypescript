@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^4.3.4",
-    "@types/react-transition-group": "^4.2.2"
+    "@types/react-transition-group": "^4.2.2",
+    "redux-devtools-extension": "^2.13.8"
   }
 }

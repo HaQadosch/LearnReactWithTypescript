@@ -1,9 +1,9 @@
 import { ActionCreator, Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { getProducts as getProductsFromAPI } from '../ProductData'
-import { IProductsGetAllAction, IProductsLoadingAction, IProductsState, ProductsActionTypes } from './ProductsTypes'
+import { IProductsGetAllAction, IProductGetSingleAction, IProductsLoadingAction, IProductsState, ProductsActionTypes } from './ProductsTypes'
 
-const loading: ActionCreator<IProductsLoadingAction> = () => ({
+export const loading: ActionCreator<IProductsLoadingAction> = () => ({
   type: ProductsActionTypes.LOADING
 })
 
@@ -15,4 +15,4 @@ export const getProducts: ActionCreator<ThunkAction<Promise<IProductsGetAllActio
       type: ProductsActionTypes.GETALL
     })
   }
-}
+} 
