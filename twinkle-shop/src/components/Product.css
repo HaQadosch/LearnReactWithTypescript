@@ -6,3 +6,11 @@
   display: block;
   padding: 8px 0px;
 }
+
+.like-container {
+  margin-top: 20px;
+}
+
+.like-container button {
+  margin-top: 5px;
+}
