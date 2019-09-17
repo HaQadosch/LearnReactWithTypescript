@@ -1,42 +1,55 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { RouteComponentProps, Prompt } from 'react-router-dom'
-import { IProduct, getProduct } from '../ProductData';
-import { /*Product, */ProductWithLoader } from './Product';
+import { IProduct } from '../ProductData';
+import { ProductWithLoader } from './Product';
+import { addToBasket } from './BasketAction'
+import { getProduct } from './ProductsAction'
+import { IApplicationState } from './Store';
+import { connect } from 'react-redux';
 
-type Props = RouteComponentProps<{ id: string }>
+interface IProductDetailPage extends RouteComponentProps<{ id: string }> {
+  addToBasket: typeof addToBasket
+  getProduct: typeof getProduct
+  loading: boolean
+  product?: IProduct
+  added: boolean
+}
 
-export const ProductDetailPage: React.FC<Props> = ({ match: { params: { id = '0' } } }) => {
-  const [inBasket, setInBasket] = useState<boolean>(false)
-  const [product, setProduct] = useState<IProduct | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-
+const ProductDetailPage_: React.FC<IProductDetailPage> = ({ match: { params: { id = '0' } }, getProduct, added, loading, product, addToBasket }) => {
   useEffect(() => {
-    async function fetchData() {
-      const productId = parseInt(id, 10)
-      const lookedUp = await getProduct(productId)
-      setProduct(lookedUp)
-      setLoading(false)
-
-    }
-    fetchData();
-    return () => {
-      setProduct(null)
-    }
+    getProduct(parseInt(id, 10))
+    // eslint-disable-next-line
   }, [id])
 
   const handleAddToBasket = () => {
-    setInBasket(true)
+    if (product !== undefined) {
+      addToBasket(product)
+    }
   }
 
   const navAwayMessage = () => 'Are you sure you want to leave without adding anything to the basket?'
 
   return (
     <span className="page-container">
-      <Prompt when={!inBasket} message={navAwayMessage} />
+      <Prompt when={!added} message={navAwayMessage} />
       {product || loading
-        ? <ProductWithLoader product={product as IProduct} inBasket={inBasket} onAddToBasket={handleAddToBasket} isLoading={loading} />
+        ? <ProductWithLoader product={product as IProduct} inBasket={added} onAddToBasket={handleAddToBasket} isLoading={loading} />
         : <p>Product not found</p>
       }
     </span>
   )
 }
+
+const mapDispatchToProps = (dispatch: any) => ({
+  addToBasket: (product: IProduct) => dispatch(addToBasket(product)),
+  getProduct: (id: number) => dispatch(getProduct(id))
+})
+
+const mapStateToProps = ({ basket: { products }, products: { productsLoading, currentProduct } }: IApplicationState) => ({
+  basketProducts: products,
+  loading: productsLoading,
+  product: currentProduct || undefined,
+  added: products.some(({ id }) => currentProduct && id === currentProduct.id)
+})
+
+export const ProductDetailPage = connect(mapStateToProps, mapDispatchToProps)(ProductDetailPage_)

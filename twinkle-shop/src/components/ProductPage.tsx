@@ -15,7 +15,6 @@ interface IProductPage extends RouteComponentProps {
 }
 
 export const ProductPage_: React.FC<IProductPage> = ({ location: { search }, getProducts, products, loading }) => {
-
   useEffect(() => {
     getProducts()
     // eslint-disable-next-line
