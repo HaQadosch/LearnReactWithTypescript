@@ -1,14 +1,18 @@
 import { applyMiddleware, combineReducers, createStore, Store } from 'redux'
 import thunk from 'redux-thunk'
 import { IProductsState } from './ProductsTypes';
+import { IBasketState } from './BasketTypes'
 import { productsReducer } from './ProductReducers';
+import { basketReducer } from './BasketReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 export interface IApplicationState {
   products: IProductsState
+  basket: IBasketState
 }
 
 const roodReducer = combineReducers<IApplicationState>({
-  products: productsReducer
+  products: productsReducer,
+  basket: basketReducer
 })
 
 
