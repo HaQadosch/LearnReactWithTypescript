@@ -2,15 +2,22 @@ import React, { useState, useEffect } from 'react'
 import './Header.css'
 import logo from '../logo.svg'
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
+import { BasketSummary } from './BasketSummary'
+import { IApplicationState } from './Store';
+import { connect } from 'react-redux';
+interface IHeader extends RouteComponentProps {
+  basketCount: number
+}
 
-const Header_: React.FC<RouteComponentProps> = ({location: { search: urlSearch }, history}) => {
+const Header_: React.FC<IHeader> = ({ location: { search: urlSearch }, history, basketCount }) => {
   const [search, setSearch] = useState<string>(urlSearch || '')
+
   useEffect(() => {
     const searchParams = new window.URLSearchParams(urlSearch)
     setSearch(s => searchParams.get('search') || '')
   }, [urlSearch])
 
-  const handleSearchOnChange: React.ChangeEventHandler<HTMLInputElement> = ({currentTarget: { value }}) => {
+  const handleSearchOnChange: React.ChangeEventHandler<HTMLInputElement> = ({ currentTarget: { value } }) => {
     setSearch(value)
   }
 
@@ -28,6 +35,7 @@ const Header_: React.FC<RouteComponentProps> = ({location: { search: urlSearch }
           value={search}
           onChange={handleSearchOnChange}
           onKeyDown={handleSearchOnKeyDown} />
+        <BasketSummary count={basketCount} />
       </form>
       <img src={logo} alt="logo" className="header-logo" />
       <h1 className="header-title">React Twinkle Shop</h1>
@@ -40,4 +48,8 @@ const Header_: React.FC<RouteComponentProps> = ({location: { search: urlSearch }
   )
 }
 
-export const Header = withRouter(Header_)
+const mapStateToProps = ({ basket: { products } }: IApplicationState) => ({
+  basketCount: products.length
+})
+
+export const Header = connect(mapStateToProps)(withRouter(Header_))
