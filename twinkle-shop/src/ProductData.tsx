@@ -57,7 +57,7 @@ export const wait = (ms: number): Promise<void> => new Promise(resolve => window
 
 export const getProduct = async (lookupId: number): Promise<IProduct | null> => {
   await wait(2000)
-  return products.filter(({ id: productId }) => productId === lookupId).pop() || null
+  return products.find(({ id: productId }) => productId === lookupId) || null
 }
 
 export const getProducts = async (): Promise<IProduct[]> => {

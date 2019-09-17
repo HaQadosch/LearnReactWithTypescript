@@ -13,7 +13,7 @@ export interface IProductsGetAllAction {
 
 export interface IProductGetSingleAction {
   type: ProductsActionTypes.GETSINGLE
-  product: IProduct
+  product: IProduct | null
 }
 
 export interface IProductsLoadingAction {
