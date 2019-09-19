@@ -20,3 +20,11 @@
 .App-link {
   color: #09d3ac;
 }
+
+
+.posts {
+  list-style: none;
+  margin: 0px auto;
+  width: 800px;
+  text-align: left;
+}
