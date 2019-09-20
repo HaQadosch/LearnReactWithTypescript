@@ -71,6 +71,14 @@ const App: React.FC = () => {
     setEditPost(post)
   }
 
+  const handleDeleteClick = ({ id }: IPost): React.MouseEventHandler<HTMLButtonElement> => () => {
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .then(() => {
+        setPosts(posts.filter(({ id: postId }) => postId !== id))
+      })
+  }
+
   useEffect(() => {
     async function getSome() {
       setLoading(true)
@@ -121,12 +129,13 @@ const App: React.FC = () => {
       </div>
       <ul className="posts">{
         posts.map(post => {
-          const { userId, id = 0, title, body } = post
+          const { id = 0, title, body } = post
           return (
             <li key={id}>
               <h3>{title}</h3>
               <p>{body}</p>
               <button onClick={handleUpdateClick(post)} >Update</button>
+              <button onClick={handleDeleteClick(post)} >Delete</button>
             </li>
           )
         })
