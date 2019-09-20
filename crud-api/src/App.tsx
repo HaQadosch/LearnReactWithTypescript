@@ -91,11 +91,10 @@ const App: React.FC = () => {
           timeout: 5000
         })
         .then(({ data }) => {
-          setLoading(false)
           setPosts(data)
+          setLoading(false)
         })
         .catch(ex => {
-          setLoading(false)
           const { response: { status = 0 } = { status: 0 }, code = '' } = ex
           const error = axios.isCancel(ex)
             ? 'request canceled'
@@ -105,6 +104,7 @@ const App: React.FC = () => {
                 ? 'resource not found'
                 : 'unexpected error occured'
           setError(error)
+          setLoading(false)
         })
     }
 
