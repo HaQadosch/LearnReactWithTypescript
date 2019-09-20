@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import axios, { CancelTokenSource } from 'axios'
-
+import { produce } from 'immer'
 interface IPost {
   userId: number
   id?: number
@@ -10,21 +10,45 @@ interface IPost {
   body: string
 }
 
-interface IPosts {
-  posts: IPost[]
-}
-
 const App: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([])
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [cancelTokenSource/*, setCancelTokenSource*/] = useState<CancelTokenSource>(axios.CancelToken.source())
+  const [editPost, setEditPost] = useState<IPost>({ body: '', title: '', userId: 0, id: 0 })
 
   const handleCancelClick: React.MouseEventHandler = () => {
     if (cancelTokenSource) {
       console.log('User canceled operation')
       cancelTokenSource.cancel('User canceled operation')
     }
+  }
+
+  const handleInputTitleChange: React.FormEventHandler<HTMLInputElement> = ({ currentTarget: { value } }) => {
+    setEditPost(produce(editPost, draft => {
+      draft.title = value
+    }))
+  }
+
+  const handleTextAreaBodyChange: React.FormEventHandler<HTMLTextAreaElement> = ({ currentTarget: { value } }) => {
+    setEditPost(produce(editPost, draft => {
+      draft.body = value
+    }))
+  }
+
+  const handleSaveClick: React.MouseEventHandler = () => {
+    axios
+      .post<IPost>('https://jsonplaceholder.typicode.com/posts',
+        { ...editPost },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      .then(({ data }) => setPosts(posts.concat(data)))
+      .then(() => {
+        setEditPost({ body: '', title: '', userId: 0, id: 0 })
+      })
   }
 
   useEffect(() => {
@@ -70,6 +94,11 @@ const App: React.FC = () => {
         ? <button onClick={handleCancelClick}>Cancel</button>
         : null
       }
+      <div className="post-edit">
+        <input type="text" name="title" id="title" placeholder='Enter title' value={editPost.title} onChange={handleInputTitleChange} />
+        <textarea name="body" id="body" cols={30} rows={10} placeholder='Enter body' value={editPost.body} onChange={handleTextAreaBodyChange} ></textarea>
+        <button onClick={handleSaveClick} >Save</button>
+      </div>
       <ul className="posts">{
         posts.map(({ userId, id = 0, title, body }) => (
           <li key={id}>
