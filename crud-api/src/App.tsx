@@ -36,19 +36,39 @@ const App: React.FC = () => {
     }))
   }
 
-  const handleSaveClick: React.MouseEventHandler = () => {
-    axios
-      .post<IPost>('https://jsonplaceholder.typicode.com/posts',
-        { ...editPost },
-        {
-          headers: {
-            'Content-Type': 'application/json'
+  const handleSaveClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    if (editPost.id) {
+      axios
+        .put<IPost>(`https://jsonplaceholder.typicode.com/posts/${editPost.id}`,
+          editPost,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
           }
+        )
+        .then(() => {
+          setPosts(posts.filter(({ id }) => id !== editPost.id).concat(editPost))
+          setEditPost({ body: '', title: '', userId: 0, id: 0 })
         })
-      .then(({ data }) => setPosts(posts.concat(data)))
-      .then(() => {
-        setEditPost({ body: '', title: '', userId: 0, id: 0 })
-      })
+    } else {
+      axios
+        .post<IPost>('https://jsonplaceholder.typicode.com/posts',
+          editPost,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+        .then(({ data }) => setPosts(posts.concat(data)))
+        .then(() => {
+          setEditPost({ body: '', title: '', userId: 0, id: 0 })
+        })
+    }
+  }
+
+  const handleUpdateClick = (post: IPost): React.MouseEventHandler<HTMLButtonElement> => () => {
+    setEditPost(post)
   }
 
   useEffect(() => {
@@ -100,12 +120,16 @@ const App: React.FC = () => {
         <button onClick={handleSaveClick} >Save</button>
       </div>
       <ul className="posts">{
-        posts.map(({ userId, id = 0, title, body }) => (
-          <li key={id}>
-            <h3>{title}</h3>
-            <p>{body}</p>
-          </li>
-        ))
+        posts.map(post => {
+          const { userId, id = 0, title, body } = post
+          return (
+            <li key={id}>
+              <h3>{title}</h3>
+              <p>{body}</p>
+              <button onClick={handleUpdateClick(post)} >Update</button>
+            </li>
+          )
+        })
       }</ul>
     </div>
   );
