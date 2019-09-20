@@ -21,14 +21,22 @@ const App: React.FC = () => {
   useEffect(() => {
     async function getSome() {
       axios
-        .get<IPost[]>('https://jsonplaceholder.typicode.com/posts')
+        .get<IPost[]>('https://jsonplaceholder.typicode.com/posts', {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          timeout: 5000
+        })
         .then(({ data }) => {
           setPosts(data)
         })
-        .catch(({ response: { status } }) => {
-          const error = status === 404
-            ? 'resource not found'
-            : 'unexpected error occured'
+        .catch(({ response: { status = 0 } = { status: 0 }, code }) => {
+          console.log({ code })
+          const error = code === 'ECONNABORTED' 
+            ? 'a timeout occured' 
+            : status === 404
+              ? 'resource not found'
+              : 'unexpected error occured'
           setError(error)
         })
     }
@@ -38,8 +46,8 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {error !== '' 
-        ? <p className='error'>{error}</p> 
+      {error !== ''
+        ? <p className='error'>{error}</p>
         : null
       }
       <ul className="posts">{
