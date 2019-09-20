@@ -16,6 +16,7 @@ interface IPosts {
 
 const App: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([])
+  const [error, setError] = useState<string>('')
 
   useEffect(() => {
     async function getSome() {
@@ -24,6 +25,12 @@ const App: React.FC = () => {
         .then(({ data }) => {
           setPosts(data)
         })
+        .catch(({ response: { status } }) => {
+          const error = status === 404
+            ? 'resource not found'
+            : 'unexpected error occured'
+          setError(error)
+        })
     }
 
     getSome()
@@ -31,14 +38,18 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      {error !== '' 
+        ? <p className='error'>{error}</p> 
+        : null
+      }
       <ul className="posts">{
-        posts.map(({userId, id = 0, title, body}) => (
+        posts.map(({ userId, id = 0, title, body }) => (
           <li key={id}>
             <h3>{title}</h3>
             <p>{body}</p>
           </li>
         ))
-      }</ul> 
+      }</ul>
     </div>
   );
 }
