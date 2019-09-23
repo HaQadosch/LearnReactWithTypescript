@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useEffect } from 'react'
 import './Header.css'
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
 
 interface IHeader {
 
@@ -12,39 +13,38 @@ interface IViewer {
 }
 
 interface IQueryResult {
-  data: {
-    viewer: IViewer
-  }
+  viewer: IViewer
 }
 
+const GET_VIEWER = gql`
+  query getViewer {
+    viewer {
+      name
+      avatarUrl
+    }
+  }
+`
+
+
+
 export const Header: React.FC<IHeader> = () => {
-  const [viewer, setViewer] = useState<IViewer>({ name: '', avatarUrl: '' })
+  const { loading, error, data } = useQuery(GET_VIEWER)
 
   useEffect(() => {
-    axios
-      .post<IQueryResult>('https://api.github.com/graphql', {
-        query: `query {
-          viewer {
-            name
-            avatarUrl
-          }
-        }`
-      }, {
-        headers: {
-          Authorization: "bearer 818899e07bae6d2a310fae56255582844f520c01"
-        }
-      })
-      .then(({data: { data: { viewer }}}) => {
-        setViewer(viewer)
-      })
-  }, [])
+    if (error || data) {
+      console.log({ error, data })
+    }
+  }, [error, data])
 
   return (
     <div>
-      <figure>
-        <img src={viewer.avatarUrl} alt="profile avatar" className='avatar' />
-        <figcaption>{viewer.name}</figcaption>
-      </figure>
+      {loading
+        ? <p>Loading...</p>
+        : <figure>
+          <img src={data && data.viewer.avatarUrl} alt="profile avatar" className='avatar' />
+          <figcaption>{data && data.viewer.name}</figcaption>
+        </figure>
+      }
       <h2>GitHub Search</h2>
     </div>
   )
