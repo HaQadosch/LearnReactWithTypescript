@@ -1,0 +1,27 @@
+.repo-search {
+  margin: 30px auto;
+  width: 300px;
+  font-family: Arial;
+  font-size: 16px;
+  text-align: left;
+}
+
+.repo-search label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.repo-search input {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #676666;
+  width: 100%;
+}
+
+.repo-search button {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 16px;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './Header.css'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
@@ -25,25 +25,19 @@ const GET_VIEWER = gql`
   }
 `
 
-
-
 export const Header: React.FC<IHeader> = () => {
-  const { loading, error, data } = useQuery(GET_VIEWER)
-
-  useEffect(() => {
-    if (error || data) {
-      console.log({ error, data })
-    }
-  }, [error, data])
+  const { loading, error, data } = useQuery<IQueryResult>(GET_VIEWER)
 
   return (
     <div>
       {loading
         ? <p>Loading...</p>
-        : <figure>
-          <img src={data && data.viewer.avatarUrl} alt="profile avatar" className='avatar' />
-          <figcaption>{data && data.viewer.name}</figcaption>
-        </figure>
+        : error
+          ? <div className="viewer">{error.toString()}</div>
+          : <figure>
+            <img src={data && data.viewer.avatarUrl} alt="profile avatar" className='avatar' />
+            <figcaption>{data && data.viewer.name}</figcaption>
+          </figure>
       }
       <h2>GitHub Search</h2>
     </div>

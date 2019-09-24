@@ -5,7 +5,7 @@ import { Header } from './components/Header'
 
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
-
+import { RepoSearch } from './components/RepoSearch'
 
 const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
@@ -21,6 +21,7 @@ const App: React.FC = () => {
         <header className="App-header">
           <Header />
         </header>
+        <RepoSearch client={client} />
       </div>
     </ApolloProvider>
   );
