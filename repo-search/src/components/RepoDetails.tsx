@@ -1,6 +1,6 @@
 import React from 'react'
 import './RepoSearch.css'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 interface ISearch {
@@ -81,19 +81,40 @@ const defaultRepo: IRepo = {
   }
 };
 
+const STAR_REPO = gql`
+  mutation($repoId: ID!) {
+    addStar(input: { starrableId: $repoId}) {
+      starrable {
+        stargazers {
+          totalCount
+        }
+      }
+    }
+  }
+`
+
 export const RepoDetails: React.FC<IRepoDetails> = ({ search: variables }) => {
   const { loading, error, data = { repository: defaultRepo } } = useQuery<IQueryResult, ISearch>(GET_REPO, { variables })
+  const [addStar, { loading: mutLoading, error: mutError, data: mutData }] = useMutation(STAR_REPO, { variables: { repoId: data.repository.id } })
 
   return (
     <div className='repo-search'>
       {loading ? <p>Loading...</p> : null}
-      {!error && data.repository && data.repository.id ? (
+      {!loading && !error && data.repository && data.repository.id ? (
         <div className="repository-item">
           <h4>
             {data.repository.name}
             {data.repository.stargazers ? ` ${data.repository.stargazers.totalCount} stars` : ''}
           </h4>
           <p>{data.repository.description}</p>
+          <div>
+            {!data.repository.viewerHasStarred && (
+              <div>
+                <button onClick={() => addStar()} disabled={mutLoading} >{mutLoading ? 'Adding...' : 'Star!'}</button>
+                {mutError && <div>{mutError.message}</div>}
+              </div>
+            )}
+          </div>
           <div>Last 5 issues: {data.repository.issues && data.repository.issues.edges ? (
             <ul>
               {data.repository.issues.edges.map(({ node: { id, title } }) => (
@@ -102,8 +123,9 @@ export const RepoDetails: React.FC<IRepoDetails> = ({ search: variables }) => {
             </ul>
           ) : null}</div>
         </div>
-      ) : null}
+      ) : null
+      }
       {error ? <p>Error</p> : null}
-    </div>
+    </div >
   )
 }
