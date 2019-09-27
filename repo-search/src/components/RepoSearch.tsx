@@ -14,7 +14,7 @@ interface ISearch {
 }
 
 export const RepoSearch: React.FC<IRepoSearch> = () => {
-  const [search, setSearch] = useState<ISearch>({ orgName: '', repoName: '' })
+  const [search, setSearch] = useState<ISearch>({ orgName: 'HaQadosch', repoName: 'LearnReactWithTypescript' })
   const [variables, setVariables] = useState<ISearch>()
 
   const handleSearch: React.FormEventHandler<HTMLFormElement> = evt => {

@@ -10,7 +10,7 @@ import { RepoSearch } from './components/RepoSearch'
 const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
   headers: {
-    Authorization: `bearer a284446f15b927707930e1e4f04118709f453389`
+    Authorization: `bearer ebe966db3d4c5cbeede3aabafaedd38398796a6c`
   }
 })
 

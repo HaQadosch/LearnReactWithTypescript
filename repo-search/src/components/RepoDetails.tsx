@@ -2,6 +2,7 @@ import React from 'react'
 import './RepoSearch.css'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import { produce } from 'immer'
 
 interface ISearch {
   orgName: string
@@ -38,7 +39,7 @@ interface IQueryResult {
 }
 
 const GET_REPO = gql`
-  query GetRepo($orgName: String!, $repoName: String!) {
+  query GetRepo ($orgName: String!, $repoName: String!) {
     repository(owner: $orgName, name: $repoName) {
       id
       name 
@@ -82,7 +83,7 @@ const defaultRepo: IRepo = {
 };
 
 const STAR_REPO = gql`
-  mutation($repoId: ID!) {
+  mutation starRepo ($repoId: ID!) {
     addStar(input: { starrableId: $repoId}) {
       starrable {
         stargazers {
@@ -95,7 +96,19 @@ const STAR_REPO = gql`
 
 export const RepoDetails: React.FC<IRepoDetails> = ({ search: variables }) => {
   const { loading, error, data = { repository: defaultRepo } } = useQuery<IQueryResult, ISearch>(GET_REPO, { variables })
-  const [addStar, { loading: mutLoading, error: mutError, data: mutData }] = useMutation(STAR_REPO, { variables: { repoId: data.repository.id } })
+  const [addStar, { loading: mutLoading, error: mutError/*, data: mutData*/, client }] = useMutation(STAR_REPO, {
+    variables: { repoId: data.repository.id },
+    // refetchQueries: () => [{ query: GET_REPO, variables }],
+    update: (cache, { data: { addStar: { starrable: { stargazers: { totalCount } } } } }) => {
+      const oldData = cache.readQuery<IQueryResult, ISearch>({ query: GET_REPO, variables })
+      if (client && oldData) {
+        const newData = produce(oldData, draft => {
+          draft.repository.stargazers.totalCount = totalCount
+        })
+        client.writeQuery({ query: GET_REPO, data: newData })
+      }
+    }
+  })
 
   return (
     <div className='repo-search'>
