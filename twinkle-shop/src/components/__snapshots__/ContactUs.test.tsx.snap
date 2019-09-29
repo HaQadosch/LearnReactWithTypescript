@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ContactUS /> should renders ok 1`] = `
+<div>
+  <form
+    class="form"
+    data-testid="form"
+    novalidate=""
+  >
+    <fieldset
+      class="form-group"
+    >
+      <label
+        for="name"
+      >
+        Your name
+      </label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        value=""
+      />
+    </fieldset>
+    <fieldset
+      class="form-group"
+    >
+      <label
+        for="email"
+      >
+        Your email
+      </label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        value=""
+      />
+    </fieldset>
+    <fieldset
+      class="form-group"
+    >
+      <label
+        for="reason"
+      >
+        Reason you need to contact us
+      </label>
+      <select
+        id="reason"
+        name="reason"
+      >
+        <option
+          value="Marketing"
+        >
+          Marketing
+        </option>
+        <option
+          value="Support"
+        >
+          Support
+        </option>
+        <option
+          value="Feedback"
+        >
+          Feedback
+        </option>
+        <option
+          value="Jobs"
+        >
+          Jobs
+        </option>
+        <option
+          value="Offer"
+        >
+          Offer
+        </option>
+      </select>
+    </fieldset>
+    <fieldset
+      class="form-group"
+    >
+      <label
+        for="notes"
+      >
+        Additional Notes
+      </label>
+      <textarea
+        id="notes"
+      />
+    </fieldset>
+    <div
+      class="form-group"
+    >
+      <button
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+`;
