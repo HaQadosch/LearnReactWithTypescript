@@ -13,7 +13,7 @@ export const ContactUS: React.FC<IContactUsProps> = ({ onSubmit }) => {
   }
 
   return (
-    <Form
+    <Form data-testid='contact-us'
       defaultValues={{ name: '', email: '', reason: 'Support', notes: '' }}
       validationRules={{
         email: { validator: required },

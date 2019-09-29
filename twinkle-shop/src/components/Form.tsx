@@ -169,7 +169,7 @@ export const Form: React.FC<IFormProps> = ({ defaultValues, validationRules, onS
 
   return (
     <FormContext.Provider value={context}>
-      <form className='form' noValidate={true} onSubmit={handleFormSubmit} >
+      <form className='form' data-testid='form' noValidate={true} onSubmit={handleFormSubmit} >
         {children}
         <div className="form-group">
           <button type="submit" disabled={submitting || submitted}>Submit</button>
