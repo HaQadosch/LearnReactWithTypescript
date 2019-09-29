@@ -14,7 +14,7 @@ afterEach(cleanup)
 
 describe('<ContactUS />', () => {
   it('should renders ok', () => {
-    const { container } = render(<ContactUS onSubmit={handleSubmit} />)
+    const { container } = render(<ContactUS onSubmit={ handleSubmit } />)
     expect(container).toMatchSnapshot()
   });
 
@@ -41,6 +41,8 @@ describe('<ContactUS />', () => {
     fireEvent.change(emailInput, { target: { value: 'carl@rippon.eu' } })
     fireEvent.click(submitBtn)
 
+    expect(handleSubmit).toHaveBeenCalled()
+    expect(handleSubmit).toHaveBeenCalledWith({ "email": "carl@rippon.eu", "name": "Carl", "notes": "", "reason": "Support" })
     expect(queryByText('This must be filled in.')).not.toBeInTheDocument()
   });
 });
