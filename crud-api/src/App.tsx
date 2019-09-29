@@ -3,7 +3,7 @@ import './App.css';
 
 import axios, { CancelTokenSource } from 'axios'
 import { produce } from 'immer'
-interface IPost {
+export interface IPost {
   userId: number
   id?: number
   title: string
@@ -11,11 +11,11 @@ interface IPost {
 }
 
 const App: React.FC = () => {
-  const [posts, setPosts] = useState<IPost[]>([])
-  const [error, setError] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
-  const [cancelTokenSource/*, setCancelTokenSource*/] = useState<CancelTokenSource>(axios.CancelToken.source())
-  const [editPost, setEditPost] = useState<IPost>({ body: '', title: '', userId: 0, id: 0 })
+  const [ posts, setPosts ] = useState<IPost[]>([])
+  const [ error, setError ] = useState<string>('')
+  const [ loading, setLoading ] = useState<boolean>(false)
+  const [ cancelTokenSource/*, setCancelTokenSource*/ ] = useState<CancelTokenSource>(axios.CancelToken.source())
+  const [ editPost, setEditPost ] = useState<IPost>({ body: '', title: '', userId: 0, id: 0 })
 
   const handleCancelClick: React.MouseEventHandler = () => {
     if (cancelTokenSource) {
@@ -80,7 +80,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    async function getSome() {
+    async function getSome () {
       setLoading(true)
       axios
         .get<IPost[]>('https://jsonplaceholder.typicode.com/posts', {
@@ -114,28 +114,28 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {error !== ''
-        ? <p className='error'>{error}</p>
+      { error !== ''
+        ? <p className='error'>{ error }</p>
         : null
       }
-      {loading
-        ? <button onClick={handleCancelClick}>Cancel</button>
+      { loading
+        ? <button onClick={ handleCancelClick }>Cancel</button>
         : null
       }
       <div className="post-edit">
-        <input type="text" name="title" id="title" placeholder='Enter title' value={editPost.title} onChange={handleInputTitleChange} />
-        <textarea name="body" id="body" cols={30} rows={10} placeholder='Enter body' value={editPost.body} onChange={handleTextAreaBodyChange} ></textarea>
-        <button onClick={handleSaveClick} >Save</button>
+        <input type="text" name="title" id="title" placeholder='Enter title' value={ editPost.title } onChange={ handleInputTitleChange } />
+        <textarea name="body" id="body" cols={ 30 } rows={ 10 } placeholder='Enter body' value={ editPost.body } onChange={ handleTextAreaBodyChange } ></textarea>
+        <button onClick={ handleSaveClick } >Save</button>
       </div>
       <ul className="posts">{
         posts.map(post => {
           const { id = 0, title, body } = post
           return (
-            <li key={id}>
-              <h3>{title}</h3>
-              <p>{body}</p>
-              <button onClick={handleUpdateClick(post)} >Update</button>
-              <button onClick={handleDeleteClick(post)} >Delete</button>
+            <li key={ id }>
+              <h3>{ title }</h3>
+              <p>{ body }</p>
+              <button onClick={ handleUpdateClick(post) } >Update</button>
+              <button onClick={ handleDeleteClick(post) } >Delete</button>
             </li>
           )
         })
