@@ -1,5 +1,5 @@
 import React from 'react';
-import App, { IPost } from './App';
+import App, { IPost } from '../App';
 import { cleanup, render, waitForElement, getAllByText } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
@@ -30,6 +30,6 @@ describe('App', () => {
     const postList = await waitForElement(() => getAllByText(container, /title/i))
 
     expect(postList).toMatchSnapshot()
-    debug()
+    // debug()
   });
 })

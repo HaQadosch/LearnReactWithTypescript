@@ -15,10 +15,26 @@
     "react-scripts": "3.1.2",
     "typescript": "3.6.3"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
