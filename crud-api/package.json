@@ -53,6 +53,6 @@
     ]
   },
   "devDependencies": {
-    "immer": "^4.0.0"
+    "immer": "^9.0.6"
   }
 }
